@@ -1,4 +1,6 @@
-﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+﻿@using System.Globalization
+@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,6 +39,12 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
+                <ul class="nav navbar-nav navbar-right">
+                    @await Html.PartialAsync("_SelectCurrencyPartial")
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @await Html.PartialAsync("_SelectLanguagePartial")
+                </ul>
             </div>
         </div>
     </nav>
@@ -44,9 +52,16 @@
         @RenderBody()
         <hr />
         <footer>
+            <p>@await Html.PartialAsync("_CurrencyTogglePartial")</p>
+            <p>@await Html.PartialAsync("_LanguageTogglePartial")</p>
             <p>&copy; 2017 - I18N</p>
         </footer>
     </div>
+
+    <script>
+        window.globalSetting = {};
+        window.globalSetting.lang = '@CultureInfo.CurrentCulture.Name';
+    </script>
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -66,7 +81,7 @@
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)

@@ -1,0 +1,15 @@
+﻿@using System.Threading.Tasks
+@using I18N.Services
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@inject ICurrencyService CurrencyService
+
+@{
+    var culture = CurrencyService.GetCurrent();
+}
+
+<a asp-controller="Localization" asp-action="ToggleCurrency" asp-route-returnUrl="@Context.Request.Path">
+    Currency: (@CurrencyService.GetSymbol(culture))
+</a>
